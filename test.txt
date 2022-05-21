@@ -1,0 +1,6 @@
+file :O
+:q
+:oq
+:exit
+add
+
