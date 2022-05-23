@@ -34,8 +34,11 @@ while True:
     elif not cont:
         print('Примите наши извинения, но в данный момент мы ничего не можем вам предложить. Заходите позже.')
     else:
-        item = cont.pop()
-        print(f"озьмите, вот вам - {item['name']} {item['amount']} (шт)")
+        item = cont.pop()        
+        print(f"озьмите, вот вам - {item['name']} 1 (шт)")
+        if (item['amount'] - 1) > 0:
+            item = {'name': item['name'], 'amount': (item['amount'] - 1)}
+            cont.append(item)        
 
 print('Вышли из цикла', cont)        
 
