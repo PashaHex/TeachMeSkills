@@ -1,37 +1,43 @@
+import json
+
 STRATEGY = input('Введите стратегию для оаботы приложения(FIFO / LIFO)').upper()
 
-with open('data.txt', 'r', encoding='utf-8') as f:
-    cont = list(map(lambda x: x.strip(), f.readlines()))
-    
-print(cont)
+with open('data.txt', 'r') as f:
+    cont = json.load(f)   
 
+print(cont)
+row_dict = {}
 while True:
-    el = input('Что у вас?')
+    el = input('Что у вас?')    
     if el:
-        if el.upper() == 'LIFO':
+        if el == 'end':
+            break
+        #num = int(input('Сколько ?'))
+        #row_dict = {'name': el, 'amount': num}
+        elif el.upper() == 'LIFO':
             STRATEGY = 'LIFO'
             continue
         elif el.upper() == 'FIFO':
             STRATEGY = 'FIFO'
-            continue
-        elif el == 'end':
-            break
-        elif STRATEGY == 'LIFO':
-            cont.append(el)
-        elif STRATEGY == 'FIFO':
-            cont.insert(0, el)        
-        elif STRATEGY != 'FIFO' or SRTATEGY != 'LIFO':
-            print('Введите корректный тип сортировки')
-            continue
+            continue        
+        else:
+            num = int(input('Сколько ?'))
+            row_dict = {'name': el, 'amount': num}        
+            if STRATEGY == 'LIFO':            
+                cont.append(row_dict)
+            elif STRATEGY == 'FIFO':            
+                cont.insert(0, row_dict)        
+            elif STRATEGY != 'FIFO' or SRTATEGY != 'LIFO':
+                print('Введите корректный тип сортировки')
+                continue
         print('Спасибо!')
     elif not cont:
         print('Примите наши извинения, но в данный момент мы ничего не можем вам предложить. Заходите позже.')
     else:
         item = cont.pop()
-        print(f'Возьмите, вот вам - {item}')
+        print(f"озьмите, вот вам - {item['name']} {item['amount']} (шт)")
 
-cont = list(map(lambda x: x + '\n', cont))
-print('Вышли из цикла', cont)
+print('Вышли из цикла', cont)        
 
-with open('data.txt', 'w', encoding='utf-8') as file:
-    file.writelines(cont)
+with open('data.txt', 'w') as file:
+    json.dump(cont, file)
